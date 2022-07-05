@@ -1,0 +1,23 @@
+[
+  {
+    "publicKey": "04bf8f5459ed3ca9bff0a33b47a1c0486a65caf1087c3b447f5464cd6c5412d701ca0e602031533462bb715313e6fcbaff1ce663cd353c79238e69971693ab4cf5",
+    "address": "0xD8Fc1dC41956A4552A7423a900b3F921758Fea7D",
+    "privateKey": "0xf23a54d4570e3428fbe230c4c0e8c90336f799317f3d41187aa938a8b928d3c4",
+    "userPassport": "AVC123456",
+    "amount": "1000"
+  },
+  {
+    "publicKey": "04db50430067b4b9a6cf2f9d37f240665d6a3200fabaa0d4ebc35156621767864f95dfb32c6094a36e8e211055c8e3a31b1a8f7a7091b7deadde2cc02521e4540c",
+    "address": "0x1f8144349E0B6c6A4846f4efec92b03E38A79357",
+    "privateKey": "0xcbd1b5725fd2b76ddc122c785697dd662ac6cf3acb18686ae3961a428d2ad281",
+    "userPassport": "AVC123456",
+    "amount": "99550"
+  },
+  {
+    "publicKey": "044a4930eb6a91c5c03c83a9c0c4024fe0e72ae0ff6871812dfc0cbcd0032b3c29f8c1f5135da93211b933e1a940a63f3b406081c518d3cbcb4e2ae41b7533c7ca",
+    "address": "0xcFd94631f37cea08f92D949B5C34D38A8eeA48c2",
+    "privateKey": "0x32d213576865995b2ccc2947149668e274500c966a91ce43a9ad80b1fbdeaedb",
+    "userPassport": "111111",
+    "amount": "0"
+  }
+]

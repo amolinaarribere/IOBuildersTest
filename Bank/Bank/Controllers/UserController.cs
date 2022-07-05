@@ -13,13 +13,11 @@ namespace Bank.Controllers
     public class UserController : ControllerBase
     {
 
-        private readonly ILogger<UserController> _logger;
 
         private BankContext _db;
 
-        public UserController(ILogger<UserController> logger, BankContext bankContext)
+        public UserController(BankContext bankContext)
         {
-            _logger = logger;
             _db = bankContext;
         }
 
@@ -34,7 +32,6 @@ namespace Bank.Controllers
                 return Ok(userDTOs);
             }
             catch (Exception ex) { 
-                _logger.LogError(ex.Message);
                 return StatusCode(500, ex.Message);
             }
 
@@ -56,7 +53,6 @@ namespace Bank.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }
@@ -79,7 +75,6 @@ namespace Bank.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex.Message);
                 return StatusCode(500, ex.Message);
             }
         }

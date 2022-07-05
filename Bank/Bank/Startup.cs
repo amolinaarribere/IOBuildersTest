@@ -46,13 +46,11 @@ namespace Bank
                         Title = APItitle,
                         Version = APIversion,
                      });
-                var filePath = Path.Combine(System.AppContext.BaseDirectory, SwaggerXMLFile);
-                c.IncludeXmlComments(filePath);
             });
 
             services.AddControllers();
 
-            services.AddDbContext<UserContext>(opt =>
+            services.AddDbContext<BankContext>(opt =>
                 opt.UseInMemoryDatabase("IOBuilderTest")
                 );
         }

@@ -1,0 +1,19 @@
+{
+  "passportId": "123456",
+  "name": "Alberto",
+  "familyName": "Molina",
+  "birthdate": "1987-11-25",
+  "address": "Chemin des grandes Roches",
+  "password": "AlbertoPasssword",
+  "salt": "test"
+},
+
+{
+  "passportId": "111111",
+  "name": "Jose",
+  "familyName": "Alvarez",
+  "birthdate": "1983-05-21",
+  "address": "Camino de Ronda",
+  "password": "JosePasssword",
+  "salt": "test2"
+}

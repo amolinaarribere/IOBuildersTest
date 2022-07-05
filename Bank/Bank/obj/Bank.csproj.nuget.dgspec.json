@@ -45,6 +45,14 @@
               "target": "Package",
               "version": "[5.0.7, )"
             },
+            "Nethereum.HdWallet": {
+              "target": "Package",
+              "version": "[4.6.1, )"
+            },
+            "Nethereum.Web3": {
+              "target": "Package",
+              "version": "[4.6.1, )"
+            },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
               "version": "[6.3.1, )"

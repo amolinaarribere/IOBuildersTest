@@ -1,20 +1,25 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bank.Models
 {
-    public class CustodialWallet
+    public class Account
     {
         [Key]
-        public string publicKey { get; set; }
-
         public string address { get; set; }
 
+        [Required]
+        public string publicKey { get; set; }
+
+        [Required]
         public string privateKey { get; set; }
 
-        [ForeignKey("User")]
+        [Required]
         public string userPassport { get; set; }
 
+        [Required]
         public string amount { get; set; }
+
     }
 }

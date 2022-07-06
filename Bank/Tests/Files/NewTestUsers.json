@@ -1,0 +1,29 @@
+[
+  {
+    "passportId": "XXX546",
+    "name": "Alvaro",
+    "familyName": "Martin",
+    "birthdate": "1964-10-25",
+    "address": "Calle Central",
+    "password": "AlvaroPasssword",
+    "salt": "test4"
+  },
+  {
+    "passportId": "999987665",
+    "name": "Tom",
+    "familyName": "Jordan",
+    "birthdate": "1989-03-03",
+    "address": "Central Park",
+    "password": "TomPasssword",
+    "salt": "test5"
+  },
+  {
+    "passportId": "444ZZ777",
+    "name": "Julio",
+    "familyName": "Maldonado",
+    "birthdate": "2005-11-18",
+    "address": "Chemin de Primerose",
+    "password": "JulioPasssword",
+    "salt": "test6"
+  }
+]

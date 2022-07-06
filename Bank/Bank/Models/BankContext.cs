@@ -11,9 +11,9 @@ namespace Bank.Models
 
         public DbSet<User> Users { get; set; }
 
-        public DbSet<CustodialWallet> Wallets { get; set; }
+        public DbSet<Account> Accounts { get; set; }
 
-        public DbSet<BankTransaction> Transactions { get; set; }
+        public DbSet<Transfer> Transfers { get; set; }
 
     }
 }

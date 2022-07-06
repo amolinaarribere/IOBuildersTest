@@ -5,16 +5,16 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Bank.DTO
 {
-    public struct UserDTO
+    public struct UserOutputDTO
     {
         public User userInfo { get; set; }
 
-        public List<CustodialWallet> wallets { get; set; }
+        public List<Account> accounts { get; set; }
 
-        public UserDTO(User _userInfo, List<CustodialWallet> _wallets)
+        public UserOutputDTO(User _userInfo, List<Account> _accounts)
         {
             userInfo = _userInfo;
-            wallets = _wallets;
+            accounts = _accounts;
         }
     }
 }

@@ -5,19 +5,21 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Bank.Models
 {
-    public class BankTransaction
+    public class Transfer
     {
         [Key]
         public Guid id { get; set; }
 
-        [ForeignKey("Wallet")]
-        public string publicKeySender { get; set; }
+        [Required]
+        public string addressSender { get; set; }
 
-        [ForeignKey("Wallet")]
-        public string publicKeyReceiver { get; set; }
+        [Required]
+        public string addressReceiver { get; set; }
 
+        [Required]
         public string amount { get; set; }
 
+        [Required]
         public DateTime transationDate { get; set; }
 
     }

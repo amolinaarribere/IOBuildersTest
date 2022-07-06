@@ -4,7 +4,7 @@
     "name": "Alberto",
     "familyName": "Molina",
     "birthdate": "1987-11-25",
-    "address": "Chemin des grandes Roches",
+    "address": "Chemin des Rosaliers",
     "password": "AlbertoPasssword",
     "salt": "test"
   },

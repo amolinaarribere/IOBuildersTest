@@ -1,9 +1,12 @@
-﻿using Bank.DTO;
+﻿using Bank.Blockchain;
+using Bank.Controllers.Common;
+using Bank.DTO;
 using Bank.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Numerics;
+using System.Threading.Tasks;
 
 namespace Bank.Controllers
 {
@@ -13,28 +16,31 @@ namespace Bank.Controllers
     {
 
         private readonly ILogger<TransferController> _logger;
-
         private BankContext _db;
+        private IBankContract _bankContract;
 
-        public TransferController(ILogger<TransferController> logger, BankContext bankContext)
+
+        public TransferController(ILogger<TransferController> logger, BankContext bankContext, IBankContract bankContract)
         {
             _logger = logger;
             _db = bankContext;
+            _bankContract = bankContract;
         }
 
         // Transfer funds from account A to account B if both exist and account A has enough funds
         [HttpPost]
-        public IActionResult Post([FromBody] TransferInputDTO transaction)
+        public async Task<IActionResult> Post([FromBody] TransferInputDTO transaction)
         {
             try 
             {
-
+                // Check Input parameters
                 if (_db.Accounts.Find(transaction.addressSender) == null ||
                     _db.Accounts.Find(transaction.addressReceiver) == null)
                 {
                     return BadRequest("Transaction content is wrong");
                 }
 
+                // Check Funds
                 Account sender = _db.Accounts.Find(transaction.addressSender);
                 Account receiver = _db.Accounts.Find(transaction.addressReceiver);
 
@@ -43,12 +49,19 @@ namespace Bank.Controllers
                     return BadRequest("Sender does not have enough funds");
                 }
 
+                // Trigger the blockchain asynchrnous task
+                var transferTask = _bankContract.TransferAsync(transaction.addressSender, transaction.addressReceiver, transaction.amount);
+
+                // Adds the transfer to the DB while Blockchain is running
                 sender.amount = (BigInteger.Parse(sender.amount) - BigInteger.Parse(transaction.amount)).ToString();
                 receiver.amount = (BigInteger.Parse(receiver.amount) + BigInteger.Parse(transaction.amount)).ToString();
 
                 Transfer newTtransfer = getTransfer(transaction);
 
                 _db.Transfers.Add(newTtransfer);
+
+                // Wait for blockchain result. If successful we commit DB changes and return success, otherwise we revert and return error.
+                await waiting.waitForBlockchainOperation(transferTask);
 
                 _db.SaveChanges();
 

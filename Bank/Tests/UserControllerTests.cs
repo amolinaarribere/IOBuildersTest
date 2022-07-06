@@ -8,6 +8,7 @@ using System.IO;
 using Microsoft.AspNetCore.Mvc;
 using Bank.DTO;
 using System.Linq;
+using Tests.Common;
 
 namespace Tests
 {

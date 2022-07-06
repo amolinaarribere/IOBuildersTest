@@ -1,4 +1,5 @@
-﻿using Bank.Models;
+﻿using Bank.Blockchain;
+using Bank.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Tests
+namespace Tests.Common
 {
     public class Init<T>
     {
@@ -56,6 +57,11 @@ namespace Tests
             var builder = new DbContextOptionsBuilder<BankContext>()
                 .UseInMemoryDatabase(databaseName: "BankDatabase");
             return new BankContext(builder.Options);
+        }
+
+        public IBankContract createBankContract()
+        {
+            return new MockBankContract();
         }
     }
 }

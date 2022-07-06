@@ -10,6 +10,8 @@ using Bank.DTO;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
+using Tests.Common;
+using System.Threading.Tasks;
 
 
 namespace Tests
@@ -26,14 +28,14 @@ namespace Tests
 
             _db = Init.createContext();
 
-            _controller = new TransferController(Init.createLogger(), _db);
+            _controller = new TransferController(Init.createLogger(), _db, Init.createBankContract());
 
             Init.FillDB(_db);
         }
    
         
         [TestMethod]
-        public void PostAccounts()
+        public async Task PostAccounts()
         {
             // Arrange
             List<Account> accounts = _db.Accounts.ToListAsync().Result;
@@ -55,7 +57,7 @@ namespace Tests
                 transferInfo.addressReceiver = accounts[j % accounts.Count].address;
                 transferInfo.amount = account.amount;
 
-                _controller.Post(transferInfo);
+                await _controller.Post(transferInfo);
                 j++;
             }
 

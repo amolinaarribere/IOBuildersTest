@@ -14,6 +14,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Bank.Models;
+using Bank.Blockchain;
 
 namespace Bank
 {
@@ -53,6 +54,8 @@ namespace Bank
             services.AddDbContext<BankContext>(opt =>
                 opt.UseInMemoryDatabase("IOBuilderTest")
                 );
+
+            services.AddSingleton<IBankContract, BankContract>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

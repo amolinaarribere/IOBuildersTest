@@ -10,7 +10,8 @@ using Bank.DTO;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
-
+using Tests.Common;
+using System.Threading.Tasks;
 
 namespace Tests
 {
@@ -26,7 +27,7 @@ namespace Tests
 
             _db = Init.createContext();
 
-            _controller = new AccountController(Init.createLogger(), Init.createConfiguration(), _db);
+            _controller = new AccountController(Init.createLogger(), Init.createConfiguration(), _db, Init.createBankContract());
 
             Init.FillDB(_db);
         }
@@ -55,7 +56,7 @@ namespace Tests
 
         
         [TestMethod]
-        public void PostAccounts()
+        public async Task PostAccounts()
         {
             // Arrange
             List<User> users = _db.Users.ToListAsync().Result;
@@ -65,7 +66,7 @@ namespace Tests
             foreach (User user in users)
             {
                 numberOfAccounts.Add(_db.Accounts.Where(w => w.userPassport == user.passportId).Count());
-                _controller.Post(user.passportId);
+                await _controller.Post(user.passportId);
             }
 
             // Assert
@@ -77,7 +78,7 @@ namespace Tests
         }
 
         [TestMethod]
-        public void PutAccounts()
+        public async Task PutAccounts()
         {
             // Arrange
             int fixAmount = 25;
@@ -89,7 +90,7 @@ namespace Tests
             foreach (Account account in accounts)
             {
                 accountFunds.Add(int.Parse(account.amount));
-                _controller.Put(account.address, (fixAmount * (j+1)).ToString());
+                await _controller.Put(account.address, (fixAmount * (j+1)).ToString());
                 j++;
             }
 

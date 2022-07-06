@@ -1,5 +1,6 @@
 ﻿using Bank.DTO;
 using Bank.Models;
+using Bank.Blockchain;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -14,6 +15,7 @@ using Nethereum.Util;
 using Nethereum.Hex.HexConvertors.Extensions;
 using Nethereum.HdWallet;
 using Microsoft.Extensions.Configuration;
+using Bank.Controllers.Common;
 
 namespace Bank.Controllers
 {
@@ -25,12 +27,14 @@ namespace Bank.Controllers
         private readonly ILogger<AccountController> _logger;
         private readonly IConfiguration _config;
         private BankContext _db;
+        private IBankContract _bankContract;
 
-        public AccountController(ILogger<AccountController> logger, IConfiguration config, BankContext bankContext)
+        public AccountController(ILogger<AccountController> logger, IConfiguration config, BankContext bankContext, IBankContract bankContract)
         {
             _logger = logger;
             _config = config;
             _db = bankContext;
+            _bankContract = bankContract;
         }
 
         // Retrieve the account plus all the transfers the account was involved in
@@ -56,23 +60,33 @@ namespace Bank.Controllers
 
         // Generates a new account for an existing user
         [HttpPost("{passportID}")]
-        public IActionResult Post(string passportID)
+        public async Task<IActionResult> Post(string passportID)
         {
             try
             {
+                // Check Input parameters
                 if (_db.Users.Find(passportID) == null)
                 {
                     return BadRequest("User with passport " + passportID + " does not exist");
                 }
 
+                // Generate the new Wallet
                 List<string> keys = generateKeys();
 
-                Models.Account newAccount = generateAccount(keys, passportID);
+                // Trigger the blockchain asynchrnous task
+                var activationTask = _bankContract.ActivateAccountAsync(keys[1]);
 
+                // Adds the account to the DB while Blockchain is running
+                Models.Account newAccount = generateAccount(keys, passportID);
                 _db.Accounts.Add(newAccount);
+
+                // Wait for blockchain result. If successful we commit DB changes and return success, otherwise we revert and return error.
+                await waiting.waitForBlockchainOperation(activationTask);
+
                 _db.SaveChanges();
 
                 return Ok("account " + newAccount.address + " created for user with passport " + passportID);
+
             }
             catch (Exception ex)
             {
@@ -84,10 +98,11 @@ namespace Bank.Controllers
         // deposits some money into a account
         [HttpPut]
         [Route("{address}/deposit/{amount}")]
-        public IActionResult Put(string address, string amount)
+        public async Task<IActionResult> Put(string address, string amount)
         {
             try
             {
+                // Check Input parameters
                 BigInteger amountBI = BigInteger.Parse(amount);
                 Models.Account account = _db.Accounts.Find(address);
 
@@ -96,9 +111,15 @@ namespace Bank.Controllers
                     return BadRequest("account with address " + address + " does not exist");
                 }
 
-                account.amount = (BigInteger.Parse(account.amount) + amountBI).ToString();
+                // Trigger the blockchain asynchrnous task
+                var depositTask = _bankContract.DepositAsync(address, amount);
 
+                // Adds the deposits to the DB while Blockchain is running
+                account.amount = (BigInteger.Parse(account.amount) + amountBI).ToString();
                 _db.Transfers.Add(generateDepositTransfer(address, amount));
+
+                // Wait for blockchain result. If successful we commit DB changes and return success, otherwise we revert and return error.
+                await waiting.waitForBlockchainOperation(depositTask);
 
                 _db.SaveChanges();
 
@@ -167,5 +188,6 @@ namespace Bank.Controllers
 
             return depositTtransfer;
         }
+
     }
 }

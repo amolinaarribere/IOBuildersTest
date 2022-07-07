@@ -3,16 +3,19 @@
 pragma solidity 0.8.10;
 
 import './IBank.sol';
+import "@openzeppelin/contracts/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol";
 
-contract Bank is IBank{
+
+contract Bank is IBank, Initializable {
     // state
     struct Account{
         bool activated;
         uint256 balance;
     }
 
-    mapping(address => Account) private _accounts;
-    address _owner;
+    mapping(address => Account) public _accounts;
+    address public _owner;
 
     // events
     event AccountActivation(address indexed account);
@@ -36,8 +39,8 @@ contract Bank is IBank{
         _;
     }
 
-    // constructor
-    constructor(address owner){
+    // initializer
+    function Bank_init(address owner) public initializer {
         _owner = owner;
     }
 

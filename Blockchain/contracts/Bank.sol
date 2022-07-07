@@ -64,13 +64,27 @@ contract Bank is IBank, Initializable {
     }
 
     function transferFunds(address To, uint256 funds) external
-        checkAccountActivation(msg.sender, true)
-        checkAccountActivation(To, true)
-        isBalanceEnough(msg.sender, funds)
     {
-        _accounts[msg.sender].balance -= funds;
+       transferFundsFromTo(msg.sender, To, funds);
+    }
+
+    function transferFundsFor(address From, address To, uint256 funds) external
+        isOwner(msg.sender)
+    {
+       transferFundsFromTo(From, To, funds);
+
+    }
+
+
+    function transferFundsFromTo(address From, address To, uint256 funds) internal
+        checkAccountActivation(From, true)
+        checkAccountActivation(To, true)
+        isBalanceEnough(From, funds)
+    {
+        _accounts[From].balance -= funds;
         _accounts[To].balance += funds;
 
-        emit Deposit(msg.sender, To, funds);
+        emit Transfer(From, To, funds);
     }
+
 }

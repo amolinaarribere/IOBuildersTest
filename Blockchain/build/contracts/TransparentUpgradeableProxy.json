@@ -12327,12 +12327,12 @@
         }
       },
       "links": {},
-      "address": "0x821F7d3Eb70dA6c49d0A81e64a60e33764D40074",
-      "transactionHash": "0xfb51a620dae885647fe110ca70f414bd17c050b36555233781b0cea0432cdae6"
+      "address": "0x080f95D798737cB2aA8D40A73B6a646C89A7F0A8",
+      "transactionHash": "0xfbfa3e6d6ba6fc17debaa21ac065e8f2ef8bb6dcfc30afdba71681f41bc15d81"
     }
   },
   "schemaVersion": "3.4.3",
-  "updatedAt": "2022-07-07T06:13:39.119Z",
+  "updatedAt": "2022-07-07T11:43:43.724Z",
   "networkType": "ethereum",
   "devdoc": {
     "details": "This contract implements a proxy that is upgradeable by an admin. To avoid https://medium.com/nomic-labs-blog/malicious-backdoors-in-ethereum-proxies-62629adf3357[proxy selector clashing], which can potentially be used in an attack, this contract uses the https://blog.openzeppelin.com/the-transparent-proxy-pattern/[transparent proxy pattern]. This pattern implies two things that go hand in hand: 1. If any account other than the admin calls the proxy, the call will be forwarded to the implementation, even if that call matches one of the admin functions exposed by the proxy itself. 2. If the admin calls the proxy, it can access the admin functions, but its calls will never be forwarded to the implementation. If the admin tries to call a function on the implementation it will fail with an error that says \"admin cannot fallback to proxy target\". These properties mean that the admin account can only be used for admin actions like upgrading the proxy or changing the admin, so it's best if it's a dedicated account that is not used for anything else. This will avoid headaches due to sudden errors when trying to call a function from the proxy implementation. Our recommendation is for the dedicated account to be an instance of the {ProxyAdmin} contract. If set up this way, you should think of the `ProxyAdmin` instance as the real administrative interface of your proxy.",

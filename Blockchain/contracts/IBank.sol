@@ -13,5 +13,6 @@ interface IBank {
     function activateAccount(address account) external;
     function depositFunds(address account, uint256 funds) external;
     function transferFunds(address To, uint256 funds) external;
+    function transferFundsFor(address From, address To, uint256 funds) external;
 
 }

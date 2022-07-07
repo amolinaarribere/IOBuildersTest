@@ -8,6 +8,6 @@ namespace Bank.Blockchain
 
         public Task<bool> DepositAsync(string address, string amount);
 
-        public Task<bool> TransferAsync(string addressSender, string addressReceiver, string amount);
+        public Task<bool> TransferAsync(string addressSender, string addressReceiver, string amount, string privateKeySender);
     }
 }

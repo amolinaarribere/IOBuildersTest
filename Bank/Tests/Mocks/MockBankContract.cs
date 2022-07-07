@@ -17,7 +17,7 @@ namespace Bank.Blockchain
             return true;
         }
 
-        public async Task<bool> TransferAsync(string addressSender, string addressReceiver, string amount)
+        public async Task<bool> TransferAsync(string addressSender, string addressReceiver, string amount, string privateKeySender)
         {
             await Task.Run(() => Thread.Sleep(1));
             return true;

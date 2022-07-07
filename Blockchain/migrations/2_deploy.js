@@ -5,7 +5,8 @@ let TransparentUpgradeableProxy = artifacts.require("@openzeppelin/contracts/pro
 
 module.exports = async function(deployer, network, accounts){
  
-  const Owner = "0x3184FA428bB8A71f8DBA653b3FEB7E07A220D748";
+  const ProxyOwner = "0x3184FA428bB8A71f8DBA653b3FEB7E07A220D748";
+  const Owner = accounts[0];
 
   // Libraries -----------------------------------------------------------------------------------------------------------------------------------------------------------------
   await deployer.deploy(Bank);
@@ -30,7 +31,7 @@ module.exports = async function(deployer, network, accounts){
   var BankProxyData = web3.eth.abi.encodeFunctionCall(BankProxyInitializerMethod, BankProxyInitializerParameters);
 
 
-  await deployer.deploy(TransparentUpgradeableProxy, BankInstance.address, Owner, BankProxyData);
+  await deployer.deploy(TransparentUpgradeableProxy, BankInstance.address, ProxyOwner, BankProxyData);
   TransparentUpgradeableProxyIns = await TransparentUpgradeableProxy.deployed();
   var ProxyAddress = TransparentUpgradeableProxyIns.address;
   console.log("Proxy deployed : " + ProxyAddress);

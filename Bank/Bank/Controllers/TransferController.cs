@@ -50,7 +50,7 @@ namespace Bank.Controllers
                 }
 
                 // Trigger the blockchain asynchrnous task
-                var transferTask = _bankContract.TransferAsync(transaction.addressSender, transaction.addressReceiver, transaction.amount);
+                var transferTask = _bankContract.TransferAsync(transaction.addressSender, transaction.addressReceiver, transaction.amount, sender.privateKey);
 
                 // Adds the transfer to the DB while Blockchain is running
                 sender.amount = (BigInteger.Parse(sender.amount) - BigInteger.Parse(transaction.amount)).ToString();

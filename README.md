@@ -43,6 +43,6 @@ All users, accounts and transfers are persisted in the Bank internal DB.
 ## Blockchain contract
 A smart contract that keeps track of all the activated accounts (Addresses) and their funds.
 
-Only the **Contract Owner (Bank owner)** can activate accounts and assign funds.
+Only the **Contract Owner (Bank owner)** can activate accounts and assign funds. It can also transfer funds on behalf of the accounts.
 
-Only **accounts** can later transfer their funds to other accounts.
+**Accounts** can only transfer their funds to other accounts.
